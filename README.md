@@ -1,9 +1,5 @@
 # 🚀 Alfabetização com Letras (Projeto Web 2)
 
-Bem-vindo ao "Alfabetização com Letras"! Este é um jogo educativo...
-
-# 🚀 Alfabetização com Letras (Projeto Web 2)
-
 Bem-vindo ao "Alfabetização com Letras"! Este é um jogo educativo interativo com a temática "Aventura Espacial", focado no auxílio à alfabetização infantil.
 
 O projeto foi desenvolvido como requisito acadêmico, demonstrando os conceitos de **Programação para Internet II** através da criação de uma aplicação web dinâmica e centrada no usuário, utilizando apenas HTML, CSS e JavaScript puro (Vanilla JS).
