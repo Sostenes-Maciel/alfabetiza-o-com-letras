@@ -1,0 +1,301 @@
+/* style.css */
+
+/* 1. Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Garante que padding e border não aumentem o tamanho total do elemento */
+    font-family: 'Space Mono', monospace; /* Fonte sugerida (precisa ser importada) */
+}
+
+/* 2. Cores da Paleta Espacial */
+:root {
+    --color-bg-dark: #0A0A1F;
+    --color-accent-blue: #00FFFF;
+    --color-accent-pink: #FF00FF;
+    --color-text-light: #F0F0FF;
+    --color-panel-bg: #1A1A33;
+    --color-error: #FF3333;
+}
+
+/* 3. Estilo do Corpo (Fundo Estrelado) */
+body {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-light);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* 4. Estilo do Título Principal (Header) */
+header h1 {
+    font-size: 2.5rem;
+    color: var(--color-accent-blue);
+    text-shadow: 0 0 10px var(--color-accent-blue);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Estilos para o Container Principal e a Barra de Status */
+
+#game_container {
+    width: 95%;
+    max-width: 1200px;
+    display: flex; /* Usaremos Flexbox para o layout geral: Status e Board */
+    flex-direction: column;
+    gap: 20px;
+    min-height: 500px;
+}
+
+/* Placar*/
+#barra_status {
+    background-color: var(--color-panel-bg);
+    border: 2px solid var(--color-accent-pink);
+    border-radius: 10px;
+    padding: 15px 30px;
+    width: 100%;
+    font-size: 1.9rem;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+    
+}
+
+#barra_status p {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#barra_status span {
+    font-weight: bold;
+    color: var(--color-accent-blue);
+}
+
+/* Área Central do Jogo */
+#game_board {
+    flex-grow: 1; /* Ocupa o restante do espaço disponível */
+    background-color: var(--color-panel-bg);
+    border: 2px solid var(--color-accent-blue);
+    border-radius: 10px;
+    padding: 20px;
+
+    /* AQUI ESTÁ O CSS GRID! */
+    display: grid;
+    /* Define duas áreas principais, dispostas em linhas */
+    grid-template-areas: 
+        "image"
+        "controls";
+    grid-template-rows: auto auto; /* Imagem maior (2 partes), Controles menor (1 parte) */
+    gap: 10px;
+    align-items: start; /* Alinha o conteúdo ao topo de cada área */
+    justify-items: center;
+}
+
+#imagem_container {
+    grid-area: image;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+}
+
+#imagem_container img {
+    max-width: 100%;
+    max-height: 35vh;
+    border-radius: 5px;
+}
+
+#controles_area {
+    grid-area: controls;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding-top: 10px;
+    width: 100%;
+}
+
+/* Palavra Incompleta */
+#quebra_cabeça {
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: 15px; /* Espaçamento entre as letras */
+    color: var(--color-text-light);
+}
+
+/* Grade de Opções (Botões) */
+#escolhas_botão {
+    display: flex; /* Usamos Flexbox para os botões aqui */
+    justify-content: center;
+    flex-wrap: wrap; /* Permite que os botões quebrem a linha se não couberem */
+    gap: 15px;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 10px;
+}
+
+.choice-btn {
+    /* Estilo do botão Néon / Tecnológico */
+    background-color: var(--color-panel-bg);
+    color: var(--color-accent-pink);
+    border: 2px solid var(--color-accent-pink);
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 0 5px var(--color-accent-pink);
+}
+
+.choice-btn:hover {
+    background-color: var(--color-accent-pink);
+    color: var(--color-bg-dark); /* Texto escuro ao passar o mouse */
+    box-shadow: 0 0 15px var(--color-accent-pink);
+    transform: translateY(-2px);
+}
+
+/* Media Query para telas menores (celulares) */
+@media (max-width: 768px) {
+    
+    /* Reverte o layout principal (Status bar + Game Board) para empilhar */
+    #game_container {
+        flex-direction: column;
+    }
+
+    /* O Placar fica no topo, ocupando 100% da largura */
+    #barra_status {
+        width: 100%; 
+        order: -1; /* Força o elemento a vir primeiro na ordem */
+        text-align: center;
+    }
+
+    /* Reduz o tamanho do título em telas pequenas */
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    /* Reduz o tamanho da fonte da palavra para caber na tela */
+    #quebra_cabeça {
+        font-size: 2rem;
+        letter-spacing: 10px;
+    }
+
+    /* Reduz o tamanho dos botões */
+    .choice-btn {
+        font-size: 1.2rem;
+        padding: 8px 15px;
+    }
+}
+
+/* style.css - Adicione no final */
+
+.missing-letter-slot {
+    /* Estilo para o espaço vazio */
+    color: var(--color-accent-blue); 
+    border-bottom: 3px solid var(--color-accent-blue); 
+    padding: 0 5px;
+}
+
+.missing-letter-slot.correct {
+    /* Estilo para a letra quando ela é acertada */
+    color: white; /* Verde de sucesso */
+    text-shadow: 0 0 10px #4CAF50;
+}
+
+.choice-btn.certo {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+    box-shadow: #4CAF50;
+    animation: shake 0.5;
+    -webkit-animation: shake 0.5;
+}
+
+.choice-btn.error {
+    /* Estilo para o botão incorreto */
+    background-color: var(--color-error);
+    border-color: var(--color-error);
+    box-shadow: 0 0 10px var(--color-error);
+    animation: shake 0.5s;
+}
+
+/* style.css - Adicione este bloco */
+
+#end_game_screen {
+    /* Inicialmente escondido */
+    display: none; 
+    
+    /* Layout para centralizar o conteúdo */
+    position: fixed; /* Fixa na tela */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 10, 31, 0.98); /* Fundo escuro do espaço */
+    color: var(--color-text-light);
+    
+    /* Centralização */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 100; 
+    padding: 20px;
+    font-size: 1.5rem;
+}
+
+#end_game_screen h2 {
+    color: var(--color-accent-blue);
+    text-shadow: 0 0 15px var(--color-accent-blue);
+    margin-bottom: 20px;
+}
+
+/* style.css - Estilo para o link de reinício */
+
+#restart_button {
+    /* Estilo de botão Néon */
+    margin-top: 30px;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    text-decoration: none; /* Remove o sublinhado padrão do link */
+    cursor: pointer;
+    
+    background-color: var(--color-panel-bg);
+    color: var(--color-accent-pink);
+    border: 2px solid var(--color-accent-pink);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+    transition: all 0.2s ease-in-out;
+}
+
+#restart_button:hover {
+    background-color: var(--color-accent-pink);
+    color: var(--color-bg-dark);
+    box-shadow: 0 0 20px var(--color-accent-pink);
+    transform: translateY(-2px);
+}
+
+#botao_musica {
+    /* Estilo de botão Néon */
+    margin-left: 1000px;
+    padding: 8px 8px;
+    font-size: 1.2rem;
+    text-decoration: none; /* Remove o sublinhado padrão do link */
+    cursor: pointer;
+    
+    background-color: var(--color-panel-bg);
+    color: var(--color-accent-pink);
+    border: 2px solid var(--color-accent-pink);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+    transition: all 0.2s ease-in-out;
+}
+
+#botao_musica:hover {
+    background-color: var(--color-accent-pink);
+    color: var(--color-bg-dark);
+    box-shadow: 0 0 20px var(--color-accent-pink);
+    transform: translateY(-2px);
+}
+
+

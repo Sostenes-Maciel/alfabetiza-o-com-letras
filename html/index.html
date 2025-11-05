@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alfabetização com Letras</title>
+    <link rel="stylesheet" href="../style/style.css">
+
+</head>
+<body>
+    <header>
+        <h1>Alfabetização com Letras</h1>
+        <button id="botao_musica">🎵 Música</button>
+
+    </header>
+
+    <main id = "game_container">
+        <br>
+        <aside id = "barra_status">
+            <p>Fase: <span id = "level">1</span>
+        </aside>
+        <div id = "game_board">
+
+            <div id = "imagem_container">
+            </div>
+
+            <div id ="controles_area">
+                <div id = "quebra_cabeça"> 
+                    </div>
+
+                    <div id = "escolhas_botão">
+                </div>
+            </div>
+        </div>    
+    </main>
+
+    <section id="end_game_screen">
+    <h2>Parabéns!</h2>
+    <p>Você completou o jogo!<span id="final_score"></span></p>
+    <button id="restart_button">Reiniciar Jogo</button>
+    <br><br>
+    </section>
+
+    <footer><br>
+        <p>&copy; 2024 Projeto Educativo</p>
+    </footer>
+    <script src="../js/jogo.js"></script>
+    <audio id="musica_fundo" src="../audio/Password .mp3" autoplay loop></audio>
+
+
+</body>
+
+
+
+</html>
