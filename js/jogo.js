@@ -7,7 +7,6 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Referências da Interface (Música e Tela Final)
   const telaFinal = document.getElementById("end_game_screen");
   const btnReiniciar = document.getElementById("restart_button");
   const musica = document.getElementById("musica_fundo");
@@ -40,7 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Array dos desafios do jogo
   const desafios = [
     {
       id: 1,
@@ -104,14 +102,12 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
-  // Referências aos Elementos do Jogo (DOM)
   const imageContainer = document.getElementById("imagem_container");
   const puzzleWordDisplay = document.getElementById("quebra_cabeça");
   const choicesGrid = document.getElementById("escolhas_botão");
   const levelDisplay = document.getElementById("level");
   const gameContainer = document.getElementById("game_container");
 
-  // Variáveis de estado do jogo
   let currentChallengeIndex = 0;
   let currentChallenge = null;
 
@@ -124,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-/**
+  /**
    * Carrega um desafio (imagem, palavra, opções) na tela com base no índice.
    * SORTEIA a letra faltante E randomiza as opções.
    * @param {number} index - O índice do desafio a ser carregado.
@@ -138,32 +134,24 @@ document.addEventListener("DOMContentLoaded", () => {
     currentChallenge = desafios[index];
     const palavraCompleta = currentChallenge.word;
 
-    // --- INÍCIO DA NOVA LÓGICA DE SORTEIO ---
-
-    // 1. Sorteia o índice da letra que vai faltar
     const missingIndex = Math.floor(Math.random() * palavraCompleta.length);
     const letraCorreta = palavraCompleta[missingIndex];
 
-    // 2. Prepara as 3 letras distratoras
-    let distratores = [...currentChallenge.distractors]; // Copia os distratores
-    
-    // Filtra distratores para garantir que não sejam a letra correta
-    distratores = distratores.filter(l => l !== letraCorreta); 
-    
-    // Embaralha os distratores restantes
+    let distratores = [...currentChallenge.distractors];
+    distratores = distratores.filter((l) => l !== letraCorreta);
     distratores.sort(() => 0.5 - Math.random());
 
-    // 3. Cria o array final de opções (A correta + 3 distratores)
-    let optionsFinais = [letraCorreta, distratores[0], distratores[1], distratores[2]];
+    let optionsFinais = [
+      letraCorreta,
+      distratores[0],
+      distratores[1],
+      distratores[2],
+    ];
 
-    // 4. Embaralha o array final de opções (o que você já fazia)
     optionsFinais.sort(() => 0.5 - Math.random());
-
-    // --- FIM DA NOVA LÓGICA DE SORTEIO ---
 
     imageContainer.innerHTML = `<img src="${currentChallenge.imagePath}" alt="Imagem de um(a) ${palavraCompleta}">`;
 
-    // Monta a palavra incompleta (usando o missingIndex sorteado)
     puzzleWordDisplay.innerHTML = "";
     const palavraDividida = palavraCompleta.split("");
 
@@ -171,10 +159,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const letter = palavraDividida[idx];
       const span = document.createElement("span");
 
-      if (idx === missingIndex) { // Usa o índice sorteado
+      if (idx === missingIndex) {
         span.className = "missing-letter-slot";
         span.textContent = "_";
-        span.dataset.letraCorreta = letter; // Armazena a letra correta sorteada
+        span.dataset.letraCorreta = letter;
       } else {
         span.className = "letter-filled";
         span.textContent = letter;
@@ -182,7 +170,6 @@ document.addEventListener("DOMContentLoaded", () => {
       puzzleWordDisplay.appendChild(span);
     }
 
-    // Cria os botões (usando as optionsFinais embaralhadas)
     choicesGrid.innerHTML = "";
     for (let i = 0; i < optionsFinais.length; i++) {
       const option = optionsFinais[i];
@@ -195,6 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     atualizarNivel();
   }
+
   /**
    * Verifica a resposta do usuário e aplica o feedback visual (certo/errado).
    * @param {string} letraEscolhida - A letra que o usuário clicou.
@@ -239,16 +227,32 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /**
+   * Força o navegador a baixar todas as imagens do jogo 
+   * antecipadamente (preloading) para evitar delays durante o jogo.
+   */
+  function precarregarImagens() {
+    console.log("Iniciando pré-carregamento dos GIFs...");
+    
+    for (let i = 0; i < desafios.length; i++) {
+        
+        const img = new Image(); 
+        
+        img.src = desafios[i].imagePath;
+    }
+    console.log("Pré-carregamento concluído.");
+  }
+
+  /**
    * Define o estado inicial da interface e carrega o primeiro desafio.
    */
   function initGame() {
-    if (gameContainer) gameContainer.style.display = "flex"; // Garante que o jogo apareça
-    if (telaFinal) telaFinal.style.display = "none"; // Garante que a tela final esteja oculta
+    if (gameContainer) gameContainer.style.display = "flex";
+    if (telaFinal) telaFinal.style.display = "none";
 
     carregarDesafio(currentChallengeIndex);
   }
 
-  // Ponto de entrada do script
+  precarregarImagens();
   initGame();
   
-}); 
+});
